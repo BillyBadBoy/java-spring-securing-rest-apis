@@ -7,8 +7,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.Collection;
-
-import static java.util.stream.Collectors.toList;
+import java.util.Collections;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class UserRepositoryUserDetailsService implements UserDetailsService {
 
@@ -21,23 +22,37 @@ public class UserRepositoryUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return users.findByUsername(username)
-                .map(UserAdapter::new)
+                .map(this::map)
                 .orElseThrow(() -> new UsernameNotFoundException("no user"));
     }
 
+    private UserAdapter map(User user) {
+
+        Collection<GrantedAuthority> auths = user.getUserAuthorities().stream()
+                .flatMap(auth -> ("ROLE_ADMIN".equals(auth.getAuthority())) ?
+                        Stream.of(
+                                new SimpleGrantedAuthority(auth.getAuthority()),
+                                new SimpleGrantedAuthority("resolution:read"),
+                                new SimpleGrantedAuthority("resolution:write")) :
+                        Stream.of(
+                                new SimpleGrantedAuthority(auth.getAuthority())))
+                .collect(Collectors.toSet());
+
+        return new UserAdapter(user, auths);
+    }
 
     private static class UserAdapter extends User implements UserDetails {
 
-        public UserAdapter(User user) {
+        private final Collection<GrantedAuthority> authorities;
+
+        public UserAdapter(User user, Collection<GrantedAuthority> authorities) {
             super(user);
+            this.authorities = authorities;
         }
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
-            return getUserAuthorities().stream()
-                    .map(UserAuthority::getAuthority)
-                    .map(SimpleGrantedAuthority::new)
-                    .collect(toList());
+            return Collections.unmodifiableCollection(authorities);
         }
 
         @Override
