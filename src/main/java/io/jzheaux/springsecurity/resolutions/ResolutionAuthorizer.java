@@ -3,7 +3,6 @@ package io.jzheaux.springsecurity.resolutions;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionOperations;
 import org.springframework.stereotype.Component;
 
-import java.util.Objects;
 import java.util.Optional;
 
 @Component("post")
@@ -26,6 +25,7 @@ public class ResolutionAuthorizer {
         }
         else {
             String name = operations.getAuthentication().getName();
+            @SuppressWarnings("unchecked")
             Optional<Resolution> resolution = (Optional<Resolution>) operations.getReturnObject();
             return resolution
                     .map(Resolution::getOwner)
