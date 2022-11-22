@@ -293,7 +293,7 @@ public class Module1_Tests {
 				"Task 6: The `/resolutions` endpoint failed to authorize user/password as the username and password. " +
 						"Make sure that you're adding the appropriate roles to the user -- since we haven't added authority yet, " +
 						"they should be added manually when constructing the `JdbcUserDetailsManager`.",
-				result.getResponse().getStatus(), 666);
+				result.getResponse().getStatus(), 200);
 	}
 
 	@Test
