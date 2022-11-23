@@ -259,7 +259,7 @@ public class Module2_Tests {
 		assertEquals(
 				"Task 2: The `/resolutions` endpoint failed with a status code of " +
 						result.getResponse().getStatus(),
-				666, result.getResponse().getStatus());
+				200, result.getResponse().getStatus());
 
 		Method makeMethod = ResolutionController.class.getDeclaredMethod("make", String.class, String.class);
 		PreAuthorize makePreAuthorize = makeMethod.getAnnotation(PreAuthorize.class);
