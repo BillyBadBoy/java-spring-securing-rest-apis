@@ -73,7 +73,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc(print=MockMvcPrint.NONE)
 @SpringBootTest
-public class Module1_Tests { 
+public class Module1_Tests {  
 
 	@Autowired
 	MockMvc mvc;
