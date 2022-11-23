@@ -432,7 +432,7 @@ public class Module1_Tests {
 		assertEquals(
 				"Task 9: `/resolutions` endpoint responded with " + result.getResponse().getStatus() + " " +
 				"instead of the expected 200",
-				200, result.getResponse().getStatus());
+				666, result.getResponse().getStatus());
 
 		result = this.mvc.perform(post("/resolution")
 				.content("my resolution")
