@@ -187,24 +187,24 @@ public class Module2_Tests {
 		this.haswriteResolution = this.repository.save(new Resolution("has write test", "haswrite"));
 	}
 
-// 	/**
-// 	 * Add the appropriate Spring Boot starter dependency
-// 	 */
-// 	@Test
-// 	public void task_1() throws Exception {
-// 		// use @PreAuthorize
-// 		assertNotNull(
-// 				"Task 1: Method Security appears to not be turned on yet. Please make sure that " +
-// 						"you've added `@EnableGlobalMethodSecurity(prePostEnabled = true)` to the application.",
-// 				this.methodSecurityInterceptor);
-// 		DelegatingMethodSecurityMetadataSource delegating = (DelegatingMethodSecurityMetadataSource) this.methodSecurityInterceptor.getSecurityMetadataSource();
+	/**
+	 * Add the appropriate Spring Boot starter dependency
+	 */
+	@Test
+	public void task_1() throws Exception {
+		// use @PreAuthorize
+		assertNotNull(
+				"Task 1: Method Security appears to not be turned on yet. Please make sure that " +
+						"you've added `@EnableGlobalMethodSecurity(prePostEnabled = true)` to the application.",
+				this.methodSecurityInterceptor);
+		DelegatingMethodSecurityMetadataSource delegating = (DelegatingMethodSecurityMetadataSource) this.methodSecurityInterceptor.getSecurityMetadataSource();
 
-// 		assertTrue(
-// 				"Task 1: Make sure you've configured method security for the `@Pre` and `@PostAuthorize` annotations " +
-// 						"by setting the `prePostEnabled` attribute to `true`",
-// 				delegating.getMethodSecurityMetadataSources().stream()
-// 						.anyMatch(PrePostAnnotationSecurityMetadataSource.class::isInstance));
-// 	}
+		assertTrue(
+				"Task 1: Make sure you've configured method security for the `@Pre` and `@PostAuthorize` annotations " +
+						"by setting the `prePostEnabled` attribute to `true`",
+				delegating.getMethodSecurityMetadataSources().stream()
+						.anyMatch(PrePostAnnotationSecurityMetadataSource.class::isInstance));
+	}
 
 	private AccessDeniedException tryAuthorized(Runnable runnable, Authentication authentication) {
 		try {
