@@ -9,7 +9,13 @@ pipeline {
             some-label: foo
         spec:
           containers:
-          - name: jdk11-container
+          - name: container1
+            image: eclipse-temurin:11
+            command:
+            - cat
+            tty: true
+          containers:
+          - name: container2
             image: eclipse-temurin:11
             command:
             - cat
@@ -20,7 +26,7 @@ pipeline {
   stages {
     stage('Run maven') {
       steps {
-        container('jdk11-container') {
+        container('container1') {
           sh 'ls -ali'
         }
       }
