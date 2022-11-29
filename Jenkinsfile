@@ -4,7 +4,6 @@ pipeline {
       yaml '''
         apiVersion: v1
         kind: Pod
-        tty: true
         metadata:
           labels:
             some-label: foo
