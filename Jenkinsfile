@@ -24,7 +24,7 @@ podTemplate(yaml: '''
         container('jdk11-container') {
 
             stage('clone repo') {
-            //      git 'https://github.com/BillyBadBoy/java-spring-securing-rest-apis.git'
+                sh './mvnw dependency:resolve -Dmaven.repo.local=/var/m2'  
                 sh 'ls -ali'  
             }
         
