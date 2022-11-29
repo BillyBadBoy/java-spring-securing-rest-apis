@@ -21,7 +21,7 @@ pipeline {
     stage('Run maven') {
       steps {
         container('jdk11-container') {
-          sh 'mvn -version'
+          sh 'ls -ali'
         }
       }
     }
