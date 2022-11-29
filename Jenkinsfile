@@ -14,7 +14,6 @@ pipeline {
             command:
             - cat
             tty: true
-          containers:
           - name: container2
             image: eclipse-temurin:11
             command:
