@@ -24,8 +24,8 @@ podTemplate(yaml: '''
         container('jdk11-container') {
 
             stage('clone repo') {
-                git 'https://github.com/BillyBadBoy/java-spring-securing-rest-apis.git'
-                sh 'chmod +x mvnw'
+            //      git 'https://github.com/BillyBadBoy/java-spring-securing-rest-apis.git'
+                sh 'ls -ali'  
             }
         
             // stage('resolve deps') {
