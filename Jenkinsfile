@@ -1,48 +1,29 @@
-podTemplate(yaml: '''
-  apiVersion: v1
-  kind: Pod
-  spec:
-    containers:
-    - name: jdk11-container
-      image: eclipse-temurin:11
-      command:
-      - sleep
-      args: 
-      - 99d
-      volumeMounts:
-      - name: m2
-        mountPath: "/var/m2"
-    volumes:
-    - emptyDir:
-        medium: ""
-      name: "workspace-volume"
-    - name: m2
-      persistentVolumeClaim:
-        claimName: mvn-pv-claim
-    ''') {
-    node(POD_LABEL) {
-        container('jdk11-container') {
-
-            stage('clone repo') {
-                sh './mvnw dependency:resolve -Dmaven.repo.local=/var/m2'  
-                sh 'ls -ali'  
-            }
-        
-            // stage('resolve deps') {
-            //     sh './mvnw dependency:resolve -Dmaven.repo.local=/var/m2'
-            // }
-
-            // stage('clean') {
-            //     sh './mvnw clean -Dmaven.repo.local=/var/m2'
-            // }
-        
-            // stage('build') {
-            //         sh './mvnw package -DskipTests=true -Dmaven.repo.local=/var/m2'
-            // }
-
-            // stage('test') {
-            //         sh './mvnw test -Dmaven.repo.local=/var/m2'
-            // }
-        }
+pipeline {
+  agent {
+    kubernetes {
+      yaml '''
+        apiVersion: v1
+        kind: Pod
+        metadata:
+          labels:
+            some-label: foo
+        spec:
+          containers:
+          - name: jdk11-container
+            image: eclipse-temurin:11
+            command:
+            - cat
+            tty: true
+        '''
     }
+  }
+  stages {
+    stage('Run maven') {
+      steps {
+        container('jdk11-container') {
+          sh 'mvn -version'
+        }
+      }
+    }
+  }
 }
